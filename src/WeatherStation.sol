@@ -29,31 +29,27 @@ contract WeatherStation {
     /// @param _temperature temperatur in basis points (100 = 0.01)
     function create(int256 _temperature) external {
         uint256 _timestamp = block.timestamp;
-        temperatures.push(
-            Data({temperature: _temperature, timestamp: _timestamp})
-        );
+        temperatures.push(Data({temperature: _temperature, timestamp: _timestamp}));
         emit Created(_temperature, _timestamp);
     }
 
     /// Paginated list of temperature data
     /// @param _req limit and offset for list
-    function list(
-        ListRequest calldata _req
-    ) external view returns (ListResponse memory _res) {
+    function list(ListRequest calldata _req) external view returns (ListResponse memory _res) {
         _res.total = temperatures.length;
         _res.offset = _req.offset;
 
         if (_req.offset > _res.total) return _res;
 
         _res.limit = _req.limit;
-        if (_req.offset + _req.limit > _res.total)
+        if (_req.offset + _req.limit > _res.total) {
             _res.limit = _res.total - _req.offset;
+        }
 
         _res.data = new Data[](_res.limit);
 
         for (uint256 i = 0; i < _res.limit; i++) {
-            _res.data[i].temperature = temperatures[_req.offset + i]
-                .temperature;
+            _res.data[i].temperature = temperatures[_req.offset + i].temperature;
             _res.data[i].timestamp = temperatures[_req.offset + i].timestamp;
         }
     }

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.28;
+
 import {Test, console} from "forge-std/Test.sol";
 import {WeatherStation} from "../src/WeatherStation.sol";
 
@@ -38,9 +39,7 @@ contract WeatherStationTest is Test {
         }
 
         // first page
-        WeatherStation.ListResponse memory _resFirstPage = ws.list(
-            WeatherStation.ListRequest({limit: 10, offset: 0})
-        );
+        WeatherStation.ListResponse memory _resFirstPage = ws.list(WeatherStation.ListRequest({limit: 10, offset: 0}));
 
         assertEq(_resFirstPage.data.length, 10);
         assertEq(_resFirstPage.limit, 10);
@@ -48,9 +47,7 @@ contract WeatherStationTest is Test {
         assertEq(_resFirstPage.total, _createAmount);
 
         // mid page
-        WeatherStation.ListResponse memory _resMidPage = ws.list(
-            WeatherStation.ListRequest({limit: 10, offset: 10})
-        );
+        WeatherStation.ListResponse memory _resMidPage = ws.list(WeatherStation.ListRequest({limit: 10, offset: 10}));
 
         assertEq(_resMidPage.data.length, 10);
         assertEq(_resMidPage.limit, 10);
@@ -58,9 +55,7 @@ contract WeatherStationTest is Test {
         assertEq(_resMidPage.total, _createAmount);
 
         // last page
-        WeatherStation.ListResponse memory _resLastPage = ws.list(
-            WeatherStation.ListRequest({limit: 10, offset: 20})
-        );
+        WeatherStation.ListResponse memory _resLastPage = ws.list(WeatherStation.ListRequest({limit: 10, offset: 20}));
 
         assertEq(_resLastPage.data.length, 4);
         assertEq(_resLastPage.limit, 4);
@@ -68,9 +63,8 @@ contract WeatherStationTest is Test {
         assertEq(_resLastPage.total, _createAmount);
 
         // non-existing page
-        WeatherStation.ListResponse memory _resNonExistingPage = ws.list(
-            WeatherStation.ListRequest({limit: 10, offset: 100})
-        );
+        WeatherStation.ListResponse memory _resNonExistingPage =
+            ws.list(WeatherStation.ListRequest({limit: 10, offset: 100}));
 
         assertEq(_resNonExistingPage.data.length, 0);
         assertEq(_resNonExistingPage.limit, 0);
