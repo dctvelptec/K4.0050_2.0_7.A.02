@@ -3,7 +3,7 @@ import { useDenominator } from "../hooks/useDenominator";
 import { useList } from "../hooks/useList";
 
 export const List = () => {
-  const LIMIT = 1;
+  const LIMIT = 4;
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
